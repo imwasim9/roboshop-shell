@@ -6,10 +6,10 @@ Y="\e[33m"
 N="\e[0m"
 
 set -euo pipefail
-trap 'echo " There is a error $LINENO, Command is: $BASH_COMMAND"' ERR
+trap 'echo " There is a error at line number: $LINENO, Command is: $BASH_COMMAND"' ERR
 
 LOGS_FOLDER="var/log/shell-roboshop"
-SCRIPT_NAME=$(echo "$0" | cut -d '.' -f1)
+SCRIPT_NAME=$(echo $0 | cut -d '.' -f1)
 LOG_FILE="$LOGS_FOLDER/SCRIPT_NAME.log" # var/log/shell-roboshop/catalogue.log
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.wasdaws.cyou
