@@ -36,27 +36,18 @@ do
     #         }]
     #     }
     #     '
-    {
-    "Comment": "Creating R53 records",
-    "Changes": [
-        {
-        "Action": "UPSERT",
-        "ResourceRecordSet": {
-            "Name": $DOMAIN_NAME,
-            "Type": "A",
-            "SetIdentifier": $RECORD_NAME,
-            "Weight": value between 0 and 255,
-            "TTL": 1,
-            "ResourceRecords": [
-            {
-                "Value": $IP
-            },
-            {...}
-            ],            
-        }
-        },
-        {...}
-    ]
-    }
-    '
+    aws route53 change-resource-record-sets \
+    --hosted-zone-id $ZONE_ID \
+    --change-batch "{
+        \"Comment\": \"Creating R53 records\",
+        \"Changes\": [{
+            \"Action\": \"UPSERT\",
+            \"ResourceRecordSet\": {
+                \"Name\": \"$RECORD_NAME\",
+                \"Type\": \"A\",
+                \"TTL\": 1,
+                \"ResourceRecords\": [{\"Value\": \"$IP\"}]
+            }
+        }]
+    }"  
 done
