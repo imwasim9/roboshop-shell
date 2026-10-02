@@ -16,7 +16,7 @@ MONGODB_HOST=mongodb.wasdaws.cyou
 
 USER_ID=$(id -u)
 
-mkdir -p LOGS_FOLDER
+mkdir -p $LOGS_FOLDER
 echo "script started at: $(date)" | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ]; then
