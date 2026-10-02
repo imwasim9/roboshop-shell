@@ -10,7 +10,7 @@ trap 'echo " There is a error at line number: $LINENO, Command is: $BASH_COMMAND
 
 LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$(echo $0 | cut -d '.' -f1)
-LOG_FILE="$LOGS_FOLDER/SCRIPT_NAME.log" # /var/log/shell-roboshop/catalogue.log
+LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-roboshop/catalogue.log
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.wasdaws.cyou
 
@@ -30,8 +30,8 @@ dnf module enable nodejs:20 -y &>>$LOG_FILE
 dnf install nodejs -y &>>$LOG_FILE
 echo -e "Installing nodejs:20 ... $G SUCCESSFULL $N"
 
-id roboshop &>>$LOG_FILE
-if [ $? -n 0 ]; then
+ID=$(id roboshop)
+if [ $ID -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop user" roboshop
 else
     echo -e "User already exist ... $Y SKIPPING $N"
