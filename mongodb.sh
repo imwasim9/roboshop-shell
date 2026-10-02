@@ -36,11 +36,11 @@ VALIDATE() {  #functions will recieve input via cmd line arguments just like she
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Adding mongo repo"
 
-dnf list installed mongodb &>>$LOG_FILE
+dnf list installed mongodb-org &>>$LOG_FILE
 # Install only if it is not installed earlier
 if [ $? -ne 0 ]; then
-   dnf install mongodb -y &>>$LOG_FILE
-   VALIDATE $? "mongodb installation"
+   dnf install mongodb-org -y &>>$LOG_FILE
+   VALIDATE $? "mongodb-org installation"
 else
    echo -e "mongodb is already installed .... $Y SKIPPING $N" | tee -a $LOG_FILE
 fi
