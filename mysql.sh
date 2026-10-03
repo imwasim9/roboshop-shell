@@ -43,9 +43,9 @@ else
    echo -e "mysql-server is already installed .... $Y SKIPPING $N" | tee -a $LOG_FILE
 fi
 
-systemctl enable mysql-server
-VALIDATE $? "Enabling mysql-server"
-systemctl start mysql-server
-VALIDATE $? "Start mysql-server"
-mysql_secure_installation --set-root-pass RoboShop@1
+systemctl enable mysqld &>>$LOG_FILE
+VALIDATE $? "Enabling mysqld"
+systemctl start mysqld &>>$LOG_FILE
+VALIDATE $? "Start mysqld"
+mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOG_FILE
 VALIDATE $? "Setting up passwd"
