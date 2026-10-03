@@ -59,18 +59,18 @@ cd /app
 VALIDATE $? "Changing to app directory"
 rm -rf /app/* # when we run more than one time better to delete existing code and install new code
 VALIDATE $? "Removing existing code"
-unzip /tmp/user.zip
+unzip /tmp/user.zip &>>$LOG_FILE
 VALIDATE $? "unzip user"
 
 npm install &>>$LOG_FILE
 VALIDATE $? "installing npm dependencies"
 
-cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOG_FILE
 VALIDATE $? "Copy systemctl service"
 
 systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "reload daemon"
 systemctl enable user &>>$LOG_FILE
 VALIDATE $? "Enable user"
-systemctl start user &>>$LOG_FILE
-VALIDATE $? "Start user"
+systemctl restart user &>>$LOG_FILE
+VALIDATE $? "restart user"
