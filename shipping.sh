@@ -39,7 +39,7 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
 dnf install maven -y &>>$LOG_FILE
 VALIDATE $? "install maven"
 
-id roboshop
+id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop user" roboshop
     VALIDATE $? "Creating system user"
@@ -47,15 +47,15 @@ else
     echo -e "User already exist ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app
+mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "Creating app directory"
 curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading shipping application"
-cd /app
+cd /app &>>$LOG_FILE
 VALIDATE $? "Changing to app directory"
-rm -rf /app/* # when we run more than one time better to delete existing code and install new code
+rm -rf /app/* &>>$LOG_FILE # when we run more than one time better to delete existing code and install new code
 VALIDATE $? "Removing existing code"
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzip shipping"
 
 mvn clean package &>>$LOG_FILE
