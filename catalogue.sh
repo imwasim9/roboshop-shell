@@ -56,25 +56,25 @@ mkdir -p /app
 VALIDATE $? "Creating app directory"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue application"
-cd /app
+cd /app &>>$LOG_FILE
 VALIDATE $? "Changing to app directory"
-rm -rf /app/* # when we run more than one time better to delete existing code and install new code
+rm -rf /app/* &>>$LOG_FILE # when we run more than one time better to delete existing code and install new code
 VALIDATE $? "Removing existing code"
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "unzip catalogue"
 
 npm install &>>$LOG_FILE
 VALIDATE $? "installing npm dependencies"
 
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "Copy systemctl service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE
 systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enable catalogue"
 
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 VALIDATE $? "copying mongo repo"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
@@ -88,6 +88,6 @@ else
     echo -e "Catalogue products were already loaded ...$Y SKIPPING $N"
 fi
 
-systemctl restart catalogue
-echo "Restarted catalogue service ... $G SUCCESS $N"
+systemctl restart catalogue &>>$LOG_FILE
+echo -e "Restarted catalogue service ... $G SUCCESS $N"
 VALIDATE $? "Restarted catalogue"
