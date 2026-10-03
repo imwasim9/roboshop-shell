@@ -43,7 +43,7 @@ dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "installing nodejs:20"
 # echo -e "Installing nodejs:20 ... $G SUCCESSFULL $N"
 
-id roboshop
+id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop user" roboshop
     VALIDATE $? "Creating system user"
