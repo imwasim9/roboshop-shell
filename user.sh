@@ -68,6 +68,9 @@ VALIDATE $? "installing npm dependencies"
 cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
 VALIDATE $? "Copy systemctl service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "reload daemon"
 systemctl enable user &>>$LOG_FILE
 VALIDATE $? "Enable user"
+systemctl start user &>>$LOG_FILE
+VALIDATE $? "Start user"
